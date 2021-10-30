@@ -10,88 +10,100 @@ function writePassword() {
 
 // Assignment code here
 var generatePassword = function () { 
-  // var funcArray = [{numbers}, {specialChars}, {lowerLetters}, {upperLetters}];
  
  
-  // create passwordInfo object saving properties as functions.
-var passwordInfo = {
-  // function to ask user about password criteria
-  length: window.prompt("How many characters will your password be? Choose between 8 and 128 characters"),
-  numbers: getRandomNumbers(),
-  specialChars: getRandomSpecialChars(), 
-  lowerLetters: getRandomLowerLetters(),
-  upperLetters: getRandomUpperLetters()
-}
+  // create funcObject object saving properties as functions.
+  var passwordInfo = {
+    // function to ask user about password criteria
+    length: getlength(),
+    numbers: getRandomNumbers(),
+    specialChars: getRandomSpecialChars(), 
+    lowerLetters: getRandomLowerLetters(),
+    upperLetters: getRandomUpperLetters()
+  }
 
-var funcArray = [{getRandomNumbers}, {getRandomSpecialChars}, {getRandomLowerLetters}, {getRandomUpperLetters}];
-console.log(funcArray);
-// add element using any "getRandom__ " functions and subtracting length 
+  // create an empty array for password to store contents of password in string later.
+  var passwordArray = [];
 
-  var password = "";
+  // Used ".concat" method to merge arrays of different choices 
+  passwordArray = passwordArray.concat(passwordInfo.numbers, passwordInfo.specialChars, passwordInfo.lowerLetters, passwordInfo.upperLetters); 
+  
+  // console.log(passwordArray);
 
- 
-  // for(var i = 0; i < passwordInfo.length; i++) {
-    if (!getRandomNumbers) {
-      // funcArray = [{getRandomSpecialChars}, {getRandomLowerLetters}, {getRandomUpperLetters}]
-    }
-    else if (!getRandomSpecialChars) {
+  if (passwordArray.length < 1) {
+    window.alert("Invalid entry, try again!");    // Set alert if user sets a password length of 0 or under 1.
+    return;
+  }
 
-    }
-    else if (!getRandomLowerLetters) {
+  var password = "";    // created empty string for password to be stored
 
-    }
-    else if (!getRandomUpperLetters) {
-
-    }
-    //password += (Math.floor(Math.random() * Math.floor(funcArray.length - 1)));
-    //(random property of passwordInfo as element of an array substituted as a function)
-    
-  //}
-
-
+  for(var i = 0; i < passwordInfo.length; i++ ) {
+    var ranNum = Math.floor(Math.random() * passwordArray.length);
+    password += passwordArray[ranNum];
+  }
   return password;
+
+  // for every iteration in passwordInfo.length, the password will be updated by a random element from the arrays that were selected as true.
+    
+      
 }
 
-// https://www.w3schools.com/charsets/ref_html_ascii.asp <-- ASCII code to use String() method .fromCharCode
-// This method will produce the characters as needed to be accepted by the browser and javascript.
 
 // Functions for getting random criteria (uppercase, lowercase, special characters and numbers)
-var getRandomNumbers = function() {
-   //number properties
-   var numbers = window.prompt("Are numbers required in your password? Select 1 for yes, 2 for No");
-   numbers = parseInt(numbers);
-   switch (numbers) {
-     case 1:
-      var randomNum = String.fromCharCode(Math.floor((Math.random() * 10) + 48));
-      // numbers = true;
-      return randomNum;
-      // return numbers;
-      break;
-     
-      case 2:
-      numbers = false;
-      return numbers; 
-      break;
+// User prompt functions below to ask/confirm properties of password
+// getLength function
+var getlength = function () {
+  
+  var length = window.prompt("How many characters will your password be? Choose between 8 and 128 characters");
+  if(length < 8 || length > 128) {
+    window.alert("Invalid entry, please try again!");
+    getlength();
+  }
+  else {
+    return length;    
+  }
+}
 
-      default: 
-       window.alert("You've chosen an incorrect choice, try again.");
+// getRandomNumbers function
+var getRandomNumbers = function() {
+  
+  var numbers = window.confirm("Are numbers required in your password? Select Ok for yes, Cancel for No");
+  
+   switch (numbers) {
+    case true:
+      var randomNum = "0123456789" 
+      numbers = true;
+      return randomNum.split(""); // .split method separates the string into an array of strings divided by whatever is in
+                                  // the quotation marks
+      
+
+    case false:
+      numbers = [];
+      return numbers; 
+  
+
+    default: 
+      //  window.alert("You've chosen an incorrect choice, try again.");
        getRandomNumbers(); 
        break;
     }
 }
 
+// getRandomSpecialChars function
 var getRandomSpecialChars = function() {
-  var characters = window.prompt("Are special characters required in your password? Select 1 for yes, 2 for No");
-  characters = parseInt(characters);
+  characters = window.confirm("Are special characters required in your password? Select Ok for yes, Cancel for No");
+  
   switch (characters) {
-    case 1:
-      var randomSpecChar = String.fromCharCode(Math.floor((Math.random() * 10) + 33));
-      return randomSpecChar;
-      break;
+    case true:
+      var randomSpecChar = "!@#$%^&*+"
+      // String.fromCharCode(Math.floor((Math.random() * 10) + 33));
+      // characters = true;
+      return randomSpecChar.split("");
 
-    case 2:
-      return false;
-      break;
+    case false:
+      characters = [];
+      // characters = false;
+      return characters;
 
     default: 
       window.alert("You've chosen an incorrect choice, try again.");
@@ -100,18 +112,18 @@ var getRandomSpecialChars = function() {
   }
 }
 
-
+//  get randomLowerLetters function
 var getRandomLowerLetters = function() {
-  var characters = window.prompt("Are lowercase letters required in your password? Select 1 for yes, 2 for No");
-  characters = parseInt(characters);
-  switch (characters) {
-    case 1:
-      var lowercaseLetters = String.fromCharCode(Math.floor((Math.random() * 26) + 97));
-      return lowercaseLetters;
+  lowerLetters = window.confirm("Are lowercase letters required in your password? Select Ok for yes, Cancel for No");
 
-    case 2:
-      return false; 
-      break;
+  switch (lowerLetters) {
+    case true:
+      var lowercaseLetters = "abcdefghijklmnopqrstuvwxyz"
+      return lowercaseLetters.split("");
+
+    case false:
+      lowerLetters =[];
+      return lowerLetters; 
 
     default: 
       window.alert("You've chosen an incorrect choice, try again.");
@@ -120,19 +132,19 @@ var getRandomLowerLetters = function() {
   }
 }
 
+// getRandomUpperLetters function
 var getRandomUpperLetters = function() {
   // Ask user if Uppercase letters should be a part of password. 
-  var letters = window.prompt("Are uppercase letters required in your password? Select 1 for yes, 2 for No");
-  letters = parseInt(letters);
-  switch (letters) {
-    case 1:
-      var uppercaseLetters = String.fromCharCode(Math.floor((Math.random() * 26) + 65));
-      return uppercaseLetters;  
+  upperLetters = window.confirm("Are uppercase letters required in your password? Select Ok for yes, Cancel for No");
+  switch (upperLetters) {
+    case true:
+      var uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      return uppercaseLetters.split("");  
       break;
-                                                        // If User inputs incorrect answer,
-    case 2:                                             // then the getRandomUpperLetters()
-      return false;                                     // will have to run again until an
-      break;                                            // acceptable input is keyed in.
+                                                        
+    case false:       
+      upperLetters = []; 
+      return upperLetters;
                                                   
     default: 
       window.alert("You've chosen an incorrect choice, try again.");
