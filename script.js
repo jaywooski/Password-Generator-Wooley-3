@@ -95,14 +95,11 @@ var getRandomSpecialChars = function() {
   
   switch (characters) {
     case true:
-      var randomSpecChar = "!@#$%^&*+"
-      // String.fromCharCode(Math.floor((Math.random() * 10) + 33));
-      // characters = true;
+      var randomSpecChar = "!@#$%^&*+";
       return randomSpecChar.split("");
 
     case false:
       characters = [];
-      // characters = false;
       return characters;
 
     default: 
