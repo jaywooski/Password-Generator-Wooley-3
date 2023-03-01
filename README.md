@@ -16,6 +16,8 @@ To install and run this repository follow theses instructions below
 3. Open the  repository with Visual Studio Code.
 4. Enjoy!
 
+## Live Deployment
+https://jaywooski.github.io/Password-Generator-Wooley-3/
 
 ## Usage
 * Go to Github and click **clone** on the repository
